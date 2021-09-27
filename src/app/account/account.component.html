@@ -1,0 +1,87 @@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">
+  create new account
+</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">STT</th>
+    <th scope="col">username</th>
+    <th scope="col">avatar</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let a of accounts, index as i">
+    <th scope="row">{{i+1}}</th>
+    <td>{{a.username}}</td>
+    <td><img src="{{a.avartar}}" width="300" height="200"></td>
+    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalchien" (click)="showAcount(a.username)">edit account</button></td>
+    <td><button type="button" class="btn btn-primary" (click)="deleteAccount(a.username)">delete</button></td>
+  </tr>
+  </tbody>
+</table>
+
+<!--create - account-->
+<div class="modal" id="myModal1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form [formGroup]="accountForm">
+          <input type="text" placeholder="name" width="100%" formControlName="username"><br>
+          <p *ngIf="!accountForm.get('username').valid && accountForm.get('username').touched" style="color: red">username phải ít nhất 3 ký tự</p>
+          <br>
+          <input type="text" placeholder="avartar" formControlName="avartar" width="100%"><br>
+          <p *ngIf="!accountForm.get('avartar').valid && accountForm.get('avartar').touched" style="color: red">không đc để trống</p>
+          <br>
+          <input type="text" placeholder="password" formControlName="password" width="100%">
+          <p *ngIf="!accountForm.get('password').valid && accountForm.get('password').touched" style="color: red">password phải ít nhất 4 ký tự</p>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button [disabled]="accountForm.invalid" type="button" class="btn btn-primary" data-dismiss="modal" (click)="createAcount()">tạo tài khoản</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!--edit-account-->
+<div class="modal" id="myModalchien">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form [formGroup]="accountForm">
+          <input type="text" placeholder="username" width="100%" formControlName="username"><br>
+          <input type="text" placeholder="avartar" formControlName="avartar" width="100%"><br>
+          <input type="text" placeholder="password" formControlName="password" width="100%">
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="editAcount()">editAccount</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="accountForm.reset()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
